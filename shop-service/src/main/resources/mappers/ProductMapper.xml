@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.codetest.shop.mapper.ProductMapper">
+
+    <resultMap id="productMap" type="com.codetest.shop.entity.Product">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="description" column="description"/>
+        <result property="price" column="price"/>
+        <result property="stock" column="stock"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <select id="selectById" resultMap="productMap">
+        SELECT * FROM product WHERE id = #{id}
+    </select>
+
+    <select id="selectAll" resultMap="productMap">
+        SELECT * FROM product
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO product (name, description, price, stock, create_time, update_time)
+        VALUES (#{name}, #{description}, #{price}, #{stock}, NOW(), NOW())
+    </insert>
+
+    <update id="update">
+        UPDATE product
+        <set>
+            <if test="name != null">name = #{name},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="stock != null">stock = #{stock},</if>
+            update_time = NOW()
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM product WHERE id = #{id}
+    </delete>
+
+    <update id="deductStock">
+        UPDATE product SET stock = stock - #{quantity}, update_time = NOW()
+        WHERE id = #{id} AND stock >= #{quantity}
+    </update>
+
+</mapper>

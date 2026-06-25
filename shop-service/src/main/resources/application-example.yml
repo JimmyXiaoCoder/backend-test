@@ -1,0 +1,48 @@
+server:
+  port: 9092
+
+spring:
+  application:
+    name: shop-service
+  datasource:
+    url: jdbc:mysql://localhost:3306/your_database?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: your_username
+    password: your_password
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: your_redis_password   # 无密码则留空
+      database: 0
+      timeout: 3000ms
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+
+mybatis:
+  mapper-locations: classpath:mappers/*.xml
+  type-aliases-package: com.codetest.shop.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+spring.cloud.openfeign:
+  client:
+    config:
+      system-service:
+        connect-timeout: 5000
+        read-timeout: 5000
+        logger-level: full
+  compression:
+    request:
+      enabled: true
+    response:
+      enabled: true
+
+logging:
+  level:
+    com.codetest: debug
+    com.codetest.shop.feign: debug

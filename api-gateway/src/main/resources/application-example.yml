@@ -1,0 +1,25 @@
+server:
+  port: 9090
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: system-service
+          uri: http://localhost:9091
+          predicates:
+            - Path=/api/system/**
+          filters:
+            - StripPrefix=1
+        - id: shop-service
+          uri: http://localhost:9092
+          predicates:
+            - Path=/api/shop/**
+          filters:
+            - StripPrefix=1
+
+logging:
+  level:
+    com.codetest: debug
