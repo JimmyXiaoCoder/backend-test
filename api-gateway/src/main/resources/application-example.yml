@@ -23,3 +23,12 @@ spring:
 logging:
   level:
     com.codetest: debug
+
+gateway:
+  rate-limit:
+    enabled: true
+    # 默认按 URL + HTTP Method 限流；后续可改为 USER_ID 或 IP
+    key-type: URL
+    max-requests: 100
+    window: 1m
+    excluded-paths: []

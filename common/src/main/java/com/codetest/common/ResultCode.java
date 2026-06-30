@@ -9,6 +9,7 @@ public enum ResultCode {
     FORBIDDEN(403, "无权限访问"),
     NOT_FOUND(404, "资源不存在"),
     METHOD_NOT_ALLOWED(405, "请求方法不允许"),
+    TOO_MANY_REQUESTS(429, "请求过于频繁，请稍后再试"),
     PARAM_MISSING(410, "缺少必要参数"),
     PARAM_INVALID(411, "参数格式不合法"),
 
